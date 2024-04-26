@@ -25,4 +25,4 @@ endmodule
     //    default:    AluOut <= 32'hxxxxxxxx;                          
     //endcase
 //实验要求  
-    //实现ALU模块
+    //实现ALU模块 
