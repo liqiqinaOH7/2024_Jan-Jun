@@ -13,7 +13,44 @@ module DataExt(
     input wire [1:0] LoadedBytesSelect,
     input wire [2:0] RegWriteMW,
     output reg [31:0] OUT
-    );    
+    );  
+    always @(*) begin
+        case(RegWrite) 
+            `NOREGWRITE: OUT = 32'h0; // No operation case 
+            `LB: 
+                case (LoadedBytesSelect)
+                    2'h0: OUT = {{24{IN[7]}}, IN[7:0]};
+                    2'h1: OUT = {{24{IN[15]}}, IN[15:8]};
+                    2'h2: OUT = {{24{IN[23]}}, IN[23:16]};
+                    2'h3: OUT = {{24{IN[31]}}, IN[31:24]};
+                    default: OUT = 32'h0;
+                endcase
+            `LH: 
+                case (LoadedBytesSelect)
+                    2'h0: OUT = {{16{IN[15]}}, IN[15:0]};
+                    2'h1: OUT = {{16{IN[23]}}, IN[23:8]};
+                    2'h2: OUT = {{16{IN[31]}}, IN[31:16]};
+                    default: OUT = 32'h0;
+                endcase
+            `LW: OUT = IN;
+            `LBU: 
+                case (LoadedBytesSelect)
+                    2'h0: OUT = {24'h0, IN[7:0]};
+                    2'h1: OUT = {24'h0, IN[15:8]};
+                    2'h2: OUT = {24'h0, IN[23:16]};
+                    2'h3: OUT = {24'h0, IN[31:24]};
+                    default: OUT = 32'h0;
+                endcase
+            `LHU:
+                case (LoadedBytesSelect)
+                    2'h0: OUT = {16'h0, IN[15:0]};
+                    2'h1: OUT = {16'h0, IN[23:8]};
+                    2'h2: OUT = {16'h0, IN[31:16]};
+                    default: OUT = 32'h0;
+                endcase
+            default: OUT = 32'h0;
+        endcase
+    end     
 endmodule
 
 //功能说明

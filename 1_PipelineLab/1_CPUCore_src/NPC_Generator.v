@@ -11,6 +11,20 @@ module NPC_Generator(
     input wire BranchE,JalD,JalrE,
     output reg [31:0] PC_In
     );
+    always @(posedge clk or posedge rst) begin
+        if (rst) 
+            PC_In <= 32'h0;    // Reset PC
+        else begin
+            if (BranchE) 
+                PC_In <= BranchTarget;
+            else if (JalD) 
+                PC_In <= JalTarget;
+            else if (JalrE) 
+                PC_In <= JalrTarget;
+            else 
+                PC_In <= PCF+4;
+        end
+    end
 endmodule
 
 //功能说明

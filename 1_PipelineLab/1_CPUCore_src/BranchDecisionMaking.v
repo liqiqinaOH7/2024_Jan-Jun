@@ -12,6 +12,25 @@ module BranchDecisionMaking(
     input wire [31:0] Operand1,Operand2,
     output reg BranchE
     );
+    always @(*) begin
+      case(BranchType)
+         `BEQ: 
+            Branch<=((Operand1==Operand2)?1'b1:1'b0);  //BEQ
+         `BNE: 
+            Branch<=((Operand1!=Operand2)?1'b1:1'b0);  //BNE
+         `BLT: 
+            Branch<=((Operand1[31]!=Operand2[31])?Operand1[31]:(Operand1<Operand2));  //BLT
+         `BLTU: 
+            Branch<=((Operand1<Operand2)?1'b1:1'b0);  //BLTU
+         `BGE: 
+            Branch<=((Operand1[31]!=Operand2[31])?Operand2[31]:(Operand1>=Operand2));  //BGE
+         `BGEU: 
+            Branch<=((Operand1>=Operand2)?1'b1:1'b0);  //BGEU
+         `NOBRANCH:
+            Branch<=1'b0;  //NOBRANCH
+         default:                            Branch<=1'b0;  //NOBRANCH
+      endcase
+    end
 endmodule
 
 //功能和接口说明
