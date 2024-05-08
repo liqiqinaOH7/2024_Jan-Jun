@@ -15,7 +15,7 @@ module DataExt(
     output reg [31:0] OUT
     );  
     always @(*) begin
-        case(RegWrite) 
+        case(RegWriteMW) 
             `NOREGWRITE: OUT = 32'h0; // No operation case 
             `LB: 
                 case (LoadedBytesSelect)

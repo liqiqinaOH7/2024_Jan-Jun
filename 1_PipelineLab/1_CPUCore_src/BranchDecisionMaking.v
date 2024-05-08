@@ -13,22 +13,22 @@ module BranchDecisionMaking(
     output reg BranchE
     );
     always @(*) begin
-      case(BranchType)
+      case(BranchTypeE)
          `BEQ: 
-            Branch<=((Operand1==Operand2)?1'b1:1'b0);  //BEQ
+            BranchE<=((Operand1==Operand2)?1'b1:1'b0);  //BEQ
          `BNE: 
-            Branch<=((Operand1!=Operand2)?1'b1:1'b0);  //BNE
+            BranchE<=((Operand1!=Operand2)?1'b1:1'b0);  //BNE
          `BLT: 
-            Branch<=((Operand1[31]!=Operand2[31])?Operand1[31]:(Operand1<Operand2));  //BLT
+            BranchE<=((Operand1[31]!=Operand2[31])?Operand1[31]:(Operand1<Operand2));  //BLT
          `BLTU: 
-            Branch<=((Operand1<Operand2)?1'b1:1'b0);  //BLTU
+            BranchE<=((Operand1<Operand2)?1'b1:1'b0);  //BLTU
          `BGE: 
-            Branch<=((Operand1[31]!=Operand2[31])?Operand2[31]:(Operand1>=Operand2));  //BGE
+            BranchE<=((Operand1[31]!=Operand2[31])?Operand2[31]:(Operand1>=Operand2));  //BGE
          `BGEU: 
-            Branch<=((Operand1>=Operand2)?1'b1:1'b0);  //BGEU
+            BranchE<=((Operand1>=Operand2)?1'b1:1'b0);  //BGEU
          `NOBRANCH:
-            Branch<=1'b0;  //NOBRANCH
-         default:                            Branch<=1'b0;  //NOBRANCH
+            BranchE<=1'b0;  //NOBranchE
+         default:                            BranchE<=1'b0;  //NOBRANCH
       endcase
     end
 endmodule
