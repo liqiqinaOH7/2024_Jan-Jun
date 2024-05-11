@@ -18,16 +18,32 @@ module HarzardUnit(
     );
     //Stall and Flush signals generate
     always@(*) begin
-        StallF = 0;
-        FlushF = 0;
-        StallD = 0;
-        FlushD = 0;
-        StallE = 0;
-        FlushE = 0;
-        StallMW = 0;
-        FlushMW = 0;
-        Forward1E = 0;
-        Forward2E = 0;
+        if(CpuRst)
+        begin
+            StallF <= 0;
+            FlushF <= 1;            
+            StallD <= 0;
+            FlushD <= 1;
+            StallE <= 0;
+            FlushE <= 1;
+            StallMW <= 0;
+            FlushMW <= 1;
+            Forward1E <= 0;
+            Forward2E <= 0;
+        end
+        else
+        begin
+            StallF <= 0;
+            FlushF <= 0;
+            StallD <= 0;
+            FlushD <= 0;
+            StallE <= 0;
+            FlushE <= 0;
+            StallMW <= 0;
+            FlushMW <= 0;
+            Forward1E <= 0;
+            Forward2E <= 0;
+        end
     end
 
 

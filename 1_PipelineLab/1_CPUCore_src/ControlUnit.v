@@ -132,14 +132,14 @@ module ControlUnit(
                 AluSrc1D <= 1'b0; // First operand of ALU is the rs1 register value
                 AluSrc2D <= 2'b10; // The second operand of the ALU is the immediate operand
                 ImmType <= `ITYPE; // The immediate type is I-Type
-                RegWriteD <= 4'b1111; // Write result(PC+4) to rd register 
+                RegWriteD <= 3'b111; // Write result(PC+4) to rd register 
             end
 
              7'b0100011: //S-type instruction
             begin
                 JalD <= 1'b0;
                 JalrD <= 1'b0;
-                RegWriteD <= 4'b0000; // No register write for Store instructions
+                RegWriteD <= 3'b000; // No register write for Store instructions
                 MemToRegD <= 1'b0; // No memory to register load for Store instructions
                 LoadNpcD <= 1'b0; // Next PC is loaded
                 RegReadD <= 2'b11; // Read from A1 and A2
@@ -162,7 +162,7 @@ module ControlUnit(
             begin
                 JalD <= 1'b0;
                 JalrD <= 1'b0;
-                RegWriteD <= 4'b0000; // No register write for Branch instructions
+                RegWriteD <= 3'b000; // No register write for Branch instructions
                 MemToRegD <= 1'b0; // No memory to register load for Branch instructions
                 MemWriteD <= 4'b0000; // No memory write for Branch instructions
                 LoadNpcD <= 1'b0; // Next PC is not usual PC+4 for Branch instructions
@@ -199,7 +199,7 @@ module ControlUnit(
                 AluSrc2D <= 2'b10;  // The second operand of the ALU is Imm for LUI instructions
                 AluSrc1D <= 1'b1; // The first operand of the ALU is zero for LUI instruction
                 ImmType <= `UTYPE; // The immediate type is U-Type
-                RegWriteD <= 4'b1111; // Write to rd for LUI instructions
+                RegWriteD <= 3'b111; // Write to rd for LUI instructions
             end
              7'b0010111: //U-type instruction AUIPC
             begin
@@ -214,7 +214,7 @@ module ControlUnit(
                 AluSrc2D <= 2'b10; // The second operand of the ALU is Imm for AUIPC instructions
                 AluSrc1D <= 1'b1; // The first operand of the ALU is PC for AUIPC instruction
                 ImmType <= `UTYPE; // The immediate type is U-Type
-                RegWriteD <= 4'b1111; // Write result to rd for AUIPC instructions
+                RegWriteD <= 3'b111; // Write result to rd for AUIPC instructions
             end
             7'b1101111: //J-type instruction JAL
             begin

@@ -1,0 +1,49 @@
+
+test_part1_4.om:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00010054 <_start>:
+   10054:	000012b7          	lui	t0,0x1
+   10058:	00428493          	addi	s1,t0,4 # 1004 <_start-0xf050>
+   1005c:	00001917          	auipc	s2,0x1
+   10060:	00002997          	auipc	s3,0x2
+   10064:	00003a17          	auipc	s4,0x3
+   10068:	00004a97          	auipc	s5,0x4
+   1006c:	00800313          	li	t1,8
+   10070:	01000393          	li	t2,16
+   10074:	01800e13          	li	t3,24
+   10078:	00532023          	sw	t0,0(t1)
+   1007c:	02932023          	sw	s1,32(t1)
+   10080:	01239023          	sh	s2,0(t2)
+   10084:	03339023          	sh	s3,32(t2)
+   10088:	014e0023          	sb	s4,0(t3)
+   1008c:	035e0023          	sb	s5,32(t3)
+   10090:	00032c03          	lw	s8,0(t1)
+   10094:	00039b03          	lh	s6,0(t2)
+   10098:	000e4b83          	lbu	s7,0(t3)
+   1009c:	00300c93          	li	s9,3
+   100a0:	00000d13          	li	s10,0
+   100a4:	019d4463          	blt	s10,s9,100ac <increment>
+   100a8:	0080006f          	j	100b0 <loop>
+
+000100ac <increment>:
+   100ac:	00000d97          	auipc	s11,0x0
+
+000100b0 <loop>:
+   100b0:	03ac8663          	beq	s9,s10,100dc <end_loop>
+   100b4:	001d0d13          	addi	s10,s10,1
+   100b8:	00100293          	li	t0,1
+   100bc:	005d0663          	beq	s10,t0,100c8 <jump_target>
+   100c0:	00a00293          	li	t0,10
+   100c4:	fe5d66e3          	bltu	s10,t0,100b0 <loop>
+
+000100c8 <jump_target>:
+   100c8:	00300313          	li	t1,3
+   100cc:	41a30933          	sub	s2,t1,s10
+   100d0:	004000ef          	jal	ra,100d4 <loop_diff>
+
+000100d4 <loop_diff>:
+   100d4:	012d5463          	ble	s2,s10,100dc <end_loop>
+   100d8:	004d8e67          	jalr	t3,4(s11) # 100b0 <loop>

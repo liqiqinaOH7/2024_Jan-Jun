@@ -1,0 +1,13 @@
+
+test_part1_3.om:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00010054 <_start>:
+   10054:	000012b7          	lui	t0,0x1
+   10058:	00428493          	addi	s1,t0,4 # 1004 <_start-0xf050>
+   1005c:	00001917          	auipc	s2,0x1
+   10060:	00002997          	auipc	s3,0x2
+   10064:	00003a17          	auipc	s4,0x3
+   10068:	00004a97          	auipc	s5,0x4

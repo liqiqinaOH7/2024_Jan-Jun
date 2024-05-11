@@ -35,14 +35,14 @@ module MWSegReg(
     );
     wire [3:0] wea;
     wire [31:0] dina;
-    assign wea = WE<<A[1:0];
-    assign dina = WD<<(A[1:0]*8);
+    assign wea = MemWriteE<<AluOutE[1:0];
+    assign dina = ForwardData2<<(AluOutE[1:0]*8);
     DataRam DataRamInst (
         .clk    ( clk            ),                      //请补全
         .wea    ( wea            ),                      //请补全
-        .addra  ( A[31:2]        ),                      //请补全
+        .addra  ( AluOutE[31:2]  ),                      //请补全
         .dina   ( dina           ),                      //请补全
-        .douta  ( RD_raw         ),
+        .douta  ( RD             ),
         .web    ( WE2            ),
         .addrb  ( A2[31:2]       ),
         .dinb   ( WD2            ),

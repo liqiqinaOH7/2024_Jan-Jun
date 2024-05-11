@@ -53,15 +53,15 @@ module EXSegReg(
         PCE        = 32'b0; 
         BrNPC      = 32'b0; 
         ImmE       = 32'b0;
-        RdE        = 32'b0;
+        RdE        = 5'b0;
         Rs1E       = 5'b0;
         Rs2E       = 5'b0;
         RegOut1E   = 32'b0;
         RegOut2E   = 32'b0;
         JalrE      = 1'b0;
-        RegWriteE  = 1'b0;
+        RegWriteE  = 3'b000;
         MemToRegE  = 1'b0;
-        MemWriteE  = 1'b0;
+        MemWriteE  = 4'b0;
         LoadNpcE   = 1'b0;
         RegReadE   = 2'b00;
         BranchTypeE = 3'b0;
@@ -74,24 +74,24 @@ module EXSegReg(
         if(en)
             if(clear)
                 begin
-                PCE<=32'b0; 
-                BrNPC<=32'b0; 
-                ImmE<=32'b0;
-                RdE<=32'b0;
-                Rs1E<=5'b0;
-                Rs2E<=5'b0;
-                RegOut1E<=32'b0;
-                RegOut2E<=32'b0;
-                JalrE<=1'b0;
-                RegWriteE<=1'b0;
-                MemToRegE<=1'b0;
-                MemWriteE<=1'b0;
-                LoadNpcE<=1'b0;
-                RegReadE<=2'b00;
-                BranchTypeE = 3'b0;
-                AluContrlE<=5'b0;
-                AluSrc1E<=1'b0; 
-                AluSrc2E<=2'b0;     
+                    PCE        <= 32'b0; 
+                    BrNPC      <= 32'b0; 
+                    ImmE       <= 32'b0;
+                    RdE        <= 5'b0;
+                    Rs1E       <= 5'b0;
+                    Rs2E       <= 5'b0;
+                    RegOut1E   <= 32'b0;
+                    RegOut2E   <= 32'b0;
+                    JalrE      <= 1'b0;
+                    RegWriteE  <= 3'b000;
+                    MemToRegE  <= 1'b0;
+                    MemWriteE  <= 4'b0;
+                    LoadNpcE   <= 1'b0;
+                    RegReadE   <= 2'b00;
+                    BranchTypeE <= 3'b0;
+                    AluContrlE <= 5'b0;
+                    AluSrc1E   <= 1'b0; 
+                    AluSrc2E   <= 2'b0;   
             end else begin
                 PCE<=PCD; 
                 BrNPC<=JalNPC; 
