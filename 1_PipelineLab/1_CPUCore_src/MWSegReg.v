@@ -33,14 +33,13 @@ module MWSegReg(
     input wire LoadNpcE,
     output reg LoadNpcMW
     );
-    wire [3:0] wea;
-    wire [31:0] dina;
-    assign wea = MemWriteE<<AluOutE[1:0];
-    assign dina = ForwardData2<<(AluOutE[1:0]*8);
+    reg [3:0] wea;
+    reg [31:0] dina;
+    reg [31:0] addra;
     DataRam DataRamInst (
         .clk    ( clk            ),                      //请补全
         .wea    ( wea            ),                      //请补全
-        .addra  ( AluOutE[31:2]  ),                      //请补全
+        .addra  ( addra          ),                      //请补全
         .dina   ( dina           ),                      //请补全
         .douta  ( RD             ),
         .web    ( WE2            ),
@@ -49,7 +48,7 @@ module MWSegReg(
         .doutb  ( RD2            )
     );   
     initial begin
-        AluOutMW <= 32'b0;
+        AluOutMW <= 32'b0;  
         RdMW <= 5'b0;
         PCMW <= 32'b0;
         RegWriteMW <= 3'b0;
@@ -66,14 +65,20 @@ module MWSegReg(
                     RegWriteMW <= 3'b0;
                     MemToRegMW <= 1'b0;
                     LoadNpcMW <= 1'b0;
+                    wea <= 4'b0;
+                    dina <= 32'b0;
+                    addra <= 32'b0;
                 end 
             else begin
                     AluOutMW <= AluOutE;
                     RdMW <= RdE;
                     PCMW <= PCE;
                     RegWriteMW <= RegWriteE;
-                    MemToRegMW <= MemToRegE;
+                    MemToRegMW <= ((RdE)?MemToRegE:0);
                     LoadNpcMW <= LoadNpcE;
+                    wea <= MemWriteE<<AluOutE[1:0];
+                    dina <= ForwardData2<<(AluOutE[1:0]*8);
+                    addra <= AluOutE[31:2];
                 end
     end
         

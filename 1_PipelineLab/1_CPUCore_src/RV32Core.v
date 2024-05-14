@@ -268,6 +268,7 @@ module RV32Core(
         .Rs2E(Rs2E),
         .RegReadE(RegReadE),
         .MemToRegE(MemToRegE),
+        .MemToRegMW(MemToRegMW),//强行加入
         .RdE(RdE),
         .RdMW(RdMW),
         .RegWriteMW(RegWriteMW),

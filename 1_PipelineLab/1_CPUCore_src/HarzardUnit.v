@@ -11,7 +11,7 @@ module HarzardUnit(
     input wire BranchE, JalrE, JalD, 
     input wire [4:0] Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdMW,
     input wire [1:0] RegReadE,
-    input wire MemToRegE,
+    input wire MemToRegE,MemToRegMW,//强行加入了MwmToRegMW
     input wire [2:0] RegWriteMW,
     output reg StallF, FlushF, StallD, FlushD, StallE, FlushE,  StallMW, FlushMW,
     output reg Forward1E, Forward2E
@@ -33,16 +33,71 @@ module HarzardUnit(
         end
         else
         begin
-            StallF <= 0;
-            FlushF <= 0;
-            StallD <= 0;
-            FlushD <= 0;
-            StallE <= 0;
-            FlushE <= 0;
-            StallMW <= 0;
-            FlushMW <= 0;
-            Forward1E <= 0;
-            Forward2E <= 0;
+            if ( !MemToRegMW && (((RegReadE[1]) && Rs1E!=0 && (Rs1E == RdMW) && (RegWriteMW != 3'b0)) || ((RegReadE[0]) && Rs2E!=0 &&(Rs2E == RdMW) && (RegWriteMW != 3'b0) )))   //&& (RdMW!=0) 
+            begin
+                StallF <= 0;
+                StallD <= 0;
+                StallE <= 0;
+                StallMW <= 0;
+                FlushF <= 0;
+                FlushD <= 0;
+                FlushE <= 0;
+                FlushMW <= 0;
+                Forward1E <= (Rs1E == RdMW) ? 1'b1 : 1'b0;
+                Forward2E <= (Rs2E == RdMW) ? 1'b1 : 1'b0;
+            end //forward
+            else if (MemToRegE && ((RdE == Rs1D && Rs1D!=0) || (RdE == Rs2D && Rs2D!=0)))
+            begin
+                StallF <= 1;
+                StallD <= 1;
+                StallE <= 0;
+                StallMW <= 0;
+                FlushF <= 0;
+                FlushD <= 0;
+                FlushE <= 0;
+                FlushMW <= 0;
+                Forward1E <= 0;
+                Forward2E <= 0;
+            end //stall            
+            else if(BranchE || JalrE)
+            begin
+                StallF <= 0;
+                StallD <= 0;
+                StallE <= 0;
+                StallMW <= 0;
+                FlushF <= 0;
+                FlushD <= 1;
+                FlushE <= 1;
+                FlushMW <= 0;
+                Forward1E <= 0;
+                Forward2E <= 0;
+            end //branch
+            else if(JalD)
+            begin
+                StallF <= 0;
+                StallD <= 0;
+                StallE <= 0;
+                StallMW <= 0;
+                FlushF <= 0;
+                FlushD <= 1;
+                FlushE <= 0;
+                FlushMW <= 0;
+                Forward1E <= 0;
+                Forward2E <= 0;
+            end //jal
+            else
+            begin
+                StallF <= 0;
+                FlushF <= 0;            
+                StallD <= 0;
+                FlushD <= 0;
+                StallE <= 0;
+                FlushE <= 0;
+                StallMW <= 0;
+                FlushMW <= 0;
+                Forward1E <= 0;
+                Forward2E <= 0;
+            end
         end
     end
 
