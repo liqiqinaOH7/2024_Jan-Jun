@@ -14,10 +14,10 @@ module NPC_Generator(
     always @(*) begin
         if (BranchE) 
             PC_In <= BranchTarget;
-        else if (JalD) 
-            PC_In <= JalTarget;
         else if (JalrE) 
             PC_In <= JalrTarget;
+        else if (JalD) 
+            PC_In <= JalTarget;
         else 
             PC_In <= PCF+4;
     end

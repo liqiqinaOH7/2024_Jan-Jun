@@ -13,10 +13,10 @@
 // !!! ALL YOU NEED TO CHANGE IS 4 FILE PATH BELOW !!!	
 //				(they are all optional, you can run cpu without change paths here,if files are failed to open, we will not dump the content to .txt and will not try to initial your bram)
 //////////////////////////////////////////////////////////////////////////////////
-`define DataRamContentLoadPath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\1testAll.data"
-`define InstRamContentLoadPath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\1testAll.inst"
-`define DataRamContentSavePath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\1testAll_AsciiDataRamContent.txt"
-`define InstRamContentSavePath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\1testAll_AsciiInstRamContent.txt"
+`define DataRamContentLoadPath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\3testAll.data"
+`define InstRamContentLoadPath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\3testAll.inst"
+`define DataRamContentSavePath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\3testAll_AsciiDataRamContent.txt"
+`define InstRamContentSavePath "D:\\lixinqi\\code\\ComputerStructure_hw2\\1_PipelineLab\\2_Simulation\\3testAll_AsciiInstRamContent.txt"
 `define BRAMWORDS 4096  //a word is 32bit, so our bram is 4096*32bit
 
 module testBench(

@@ -28,38 +28,10 @@ module HarzardUnit(
             FlushE <= 1;
             StallMW <= 0;
             FlushMW <= 1;
-            Forward1E <= 0;
-            Forward2E <= 0;
         end
         else
-        begin
-            if ( !MemToRegMW && (((RegReadE[1]) && Rs1E!=0 && (Rs1E == RdMW) && (RegWriteMW != 3'b0)) || ((RegReadE[0]) && Rs2E!=0 &&(Rs2E == RdMW) && (RegWriteMW != 3'b0) )))   //&& (RdMW!=0) 
-            begin
-                StallF <= 0;
-                StallD <= 0;
-                StallE <= 0;
-                StallMW <= 0;
-                FlushF <= 0;
-                FlushD <= 0;
-                FlushE <= 0;
-                FlushMW <= 0;
-                Forward1E <= (Rs1E == RdMW) ? 1'b1 : 1'b0;
-                Forward2E <= (Rs2E == RdMW) ? 1'b1 : 1'b0;
-            end //forward
-            else if (MemToRegE && ((RdE == Rs1D && Rs1D!=0) || (RdE == Rs2D && Rs2D!=0)))
-            begin
-                StallF <= 1;
-                StallD <= 1;
-                StallE <= 0;
-                StallMW <= 0;
-                FlushF <= 0;
-                FlushD <= 0;
-                FlushE <= 0;
-                FlushMW <= 0;
-                Forward1E <= 0;
-                Forward2E <= 0;
-            end //stall            
-            else if(BranchE || JalrE)
+        begin          
+            if(BranchE || JalrE)
             begin
                 StallF <= 0;
                 StallD <= 0;
@@ -69,8 +41,6 @@ module HarzardUnit(
                 FlushD <= 1;
                 FlushE <= 1;
                 FlushMW <= 0;
-                Forward1E <= 0;
-                Forward2E <= 0;
             end //branch
             else if(JalD)
             begin
@@ -82,9 +52,18 @@ module HarzardUnit(
                 FlushD <= 1;
                 FlushE <= 0;
                 FlushMW <= 0;
-                Forward1E <= 0;
-                Forward2E <= 0;
             end //jal
+            else if (MemToRegE && ((RdE == Rs1D && Rs1D!=0) || (RdE == Rs2D && Rs2D!=0)))
+            begin
+                StallF <= 1;
+                StallD <= 1;
+                StallE <= 0;
+                StallMW <= 0;
+                FlushF <= 0;
+                FlushD <= 0;
+                FlushE <= 0;
+                FlushMW <= 0;
+            end //stall  
             else
             begin
                 StallF <= 0;
@@ -95,15 +74,32 @@ module HarzardUnit(
                 FlushE <= 0;
                 StallMW <= 0;
                 FlushMW <= 0;
-                Forward1E <= 0;
-                Forward2E <= 0;
             end
         end
     end
 
 
     //Forward Register Source 1
-
+    always@(*) begin
+        if(CpuRst)
+        begin
+            Forward1E <= 0;
+            Forward2E <= 0;
+        end
+        else
+        begin
+             if ( !MemToRegMW && (((RegReadE[1]) && Rs1E!=0 && (Rs1E == RdMW) && (RegWriteMW != 3'b0)) || ((RegReadE[0]) && Rs2E!=0 &&(Rs2E == RdMW) && (RegWriteMW != 3'b0))))
+             begin
+                Forward1E <= (Rs1E == RdMW) ? 1'b1 : 1'b0;
+                Forward2E <= (Rs2E == RdMW) ? 1'b1 : 1'b0;
+             end
+             else
+             begin
+                Forward1E <= 0;
+                Forward2E <= 0;
+             end
+        end
+    end
     //Forward Register Source 2
 
 endmodule
